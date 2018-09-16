@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+<form id="login">
+    <p>e-mail</p>
+    <input type="email" name="email" id="email">
+
+    <p>Mot de passe</p>
+    <input type="password" name="password" id="password">
+
+    <div>
+        <input type="submit" id="submit" value="Connexion">
+    </div>
+
+    <script>
+        $(document).ready(function(){
+
+            $("#submit").click(function(e){
+                e.preventDefault();
+
+                $.post(
+                    '../handlers/login.php',
+                    {
+                        email : $("#email").val(),  // Nous récupérons la valeur de nos inputs que l'on fait passer à connexion.php
+                        password : $("#password").val()
+                    },
+                    function(data){
+                        console.log(data);
+                        if(data.logged_in){
+                            window.location.href = 'home.php';
+                        } else {
+                            alert(data.error);
+                        }
+                    },
+                    'json'
+                );
+            });
+        });
+    </script>
+</form>
+</body>
+</html>

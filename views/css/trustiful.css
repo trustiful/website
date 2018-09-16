@@ -1,0 +1,146 @@
+.trustiful{
+    position: fixed;
+    bottom: 0;
+    right:0;
+    align-content : right;
+    max-width: 25%;
+
+    text-align: center;
+
+}
+.first-body{
+    background-color: white;
+    padding: 10px 20px;
+
+}
+
+.img-fluid{
+    max-width: 100%;
+    height: auto;
+}
+
+.trusted{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 36px;
+    font-weight: bold;
+}
+.evaluated{
+    padding-bottom: 20px;
+    font-size: 22px;
+    font-style: italic;
+
+}
+
+.last-evaluation{
+    padding-bottom: 20px;
+    color: #33cc33;
+    font-size: 14px;
+}
+
+.tf-banner{
+    margin-left: 15%;
+    margin-right: 15%;
+    background-color: #33cc33;
+    border-radius: 20px;
+
+}
+
+@font-face {
+    font-family: 'Lato', sans-serif;
+}
+
+.tf-p {
+    margin: 0;
+}
+
+.modal-dialog{
+    margin: 20% auto !important;
+}
+
+.modal-content{
+    border-radius: 0 !important;
+    background-color: #f5f5f5 !important;
+
+}
+
+.modal-header{
+    background-color: #33cc33;
+    font-size: 26px;
+    color: white;
+    text-align: center;
+    padding: 10px 15px !important;
+}
+
+.close{
+    margin-top: 5px !important;
+}
+
+.col-md-4{
+    text-align: center !important;
+}
+
+#nbDispute{
+    font-size: 50px;
+    color: #33cc33;
+}
+
+#dispute{
+    font-size: 26px;
+
+}
+
+.black{
+    color: black;
+    font-size: 16px;
+    font-weight: bold !important;
+
+}
+
+.green{
+    color: #33cc33;
+    font-size: 16px;
+    font-weight: bold !important;
+}
+
+.tf-span-black{
+    color: black;
+    font-size: 20px;
+    font-weight: bold !important;
+
+}
+.white{
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold !important;
+}
+
+#last_column_info{
+    color: #33cc33;
+    font-size: 24px;
+    font-weight: bold !important;
+}
+
+#text-footer{
+    padding-top: 10px;
+
+    text-align: left;
+}
+
+.bestExp{
+    margin-left: 10%;
+}
+#img-footer{
+    text-align: center;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+}
+.bg-grey{
+    margin-top: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #ffffff;
+ }

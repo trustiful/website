@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+<form id="register">
+    <p>e-mail</p>
+    <input type="email" id="email" name="email">
+
+    <p>Mot de passe</p>
+    <input type="password" id="password" name="password">
+
+    <p>Pr&eacutenom</p>
+    <input type="text" id="firstname" name="firstname">
+
+    <p>Nom</p>
+    <input type="text" id="lastname" name="lastname">
+
+    <p>Sexe</p>
+    <input type="radio" name="gender" value="H"> H
+    <input type="radio" name="gender" value="F"> F
+    <div>
+        <input type="submit" id="submit" value="Enregistrer">
+    </div>
+</form>
+
+<script>
+    $(document).ready(function(){
+
+        $("#submit").click(function(e){
+            e.preventDefault();
+
+            $.post(
+                '../handlers/register.php',
+                {
+                    email : $("#email").val(),
+                    password : $("#password").val(),
+                    firstname : $("#firstname").val(),
+                    lastname : $("#lastname").val(),
+                    gender : $("input[name=gender]:checked", "#register").val()
+                },
+                function(data){
+                    if(data.registered){
+                        alert('Inscription validée');
+                        window.location.href = './login.html';
+                    } else {
+                        alert(data.error);
+                    }
+                },
+                'json'
+            );
+        });
+    });
+</script>
+</body>
+</html>

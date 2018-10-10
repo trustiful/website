@@ -75,53 +75,51 @@ require_once '../handlers/user_logged_in.php';
     <div>
         <input type="submit" id="submit" value="Enregistrer">
     </div>
-
-    <script>
-        $(document).ready(function(){
-
-            $("#immat_place").focusout(function () {
-                $("#rcs_number").val('RCS '+ $("#immat_place").val() + ' ' +  $("#siren").val());
-            });
-            $("#siren").focusout(function () {
-                $("#rcs_number").val('RCS '+ $("#immat_place").val() + ' ' +  $("#siren").val());
-            });
-
-            $("#submit").click(function(e){
-                e.preventDefault();
-
-                $.post(
-                    '../handlers/register.php',
-                    {
-                        email : $("#firstname").val() + $("#lastname").val() + Date.now(),
-                        password : $("#password").val(),
-                        firstname : $("#firstname").val(),
-                        lastname : $("#lastname").val(),
-                        gender : $("input[name=gender]:checked", "#register").val(),
-                        role : "client",
-
-                        url :  $("#url").val(),
-                        address :  $("#address").val(),
-                        phone :  $("#phone").val(),
-                        rcs_number :  $("#rcs_number").val(),
-                        subscription :  $("input[name=subscription]:checked", "#register").val(),
-                        evaluation_note :  $("#evaluation_note").val(),
-
-                        shipping_time : $("#shipping_time").val(),
-                        dispute : $("#dispute").val(),
-                        return_policy: $("#return_policy").val(),
-                        customer_service: $("#customer_service").val(),
-                        position : 0 /* $("input[name=position]:checked", "#register").val()*/,
-                    },
-                    function(data){
-
-                    },
-                    'json'
-                );
-            });
-        });
-    </script>
 </form>
+<script>
+    $(document).ready(function(){
 
+        $("#immat_place").focusout(function () {
+            $("#rcs_number").val('RCS '+ $("#immat_place").val() + ' ' +  $("#siren").val());
+        });
+        $("#siren").focusout(function () {
+            $("#rcs_number").val('RCS '+ $("#immat_place").val() + ' ' +  $("#siren").val());
+        });
+
+        $("#submit").click(function(e){
+            e.preventDefault();
+
+            $.post(
+                '../handlers/register.php',
+                {
+                    email : $("#firstname").val() + $("#lastname").val() + Date.now(),
+                    password : $("#password").val(),
+                    firstname : $("#firstname").val(),
+                    lastname : $("#lastname").val(),
+                    gender : $("input[name=gender]:checked", "#register").val(),
+                    role : "client",
+
+                    url :  $("#url").val(),
+                    address :  $("#address").val(),
+                    phone :  $("#phone").val(),
+                    rcs_number :  $("#rcs_number").val(),
+                    subscription :  $("input[name=subscription]:checked", "#register").val(),
+                    evaluation_note :  $("#evaluation_note").val(),
+
+                    shipping_time : $("#shipping_time").val(),
+                    dispute : $("#dispute").val(),
+                    return_policy: $("#return_policy").val(),
+                    customer_service: $("#customer_service").val(),
+                    position : 0 /* $("input[name=position]:checked", "#register").val()*/,
+                },
+                function(data){
+
+                },
+                'json'
+            );
+        });
+    });
+</script>
 
 </body>
 </html>

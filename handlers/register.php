@@ -28,7 +28,7 @@ if (isset($_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['last
 
 
 if (isset($_POST['url'], $_POST['address'], $_POST['phone'], $_POST['subscription'], $_POST['evaluation_note'], $_POST['rcs_number'])) {
-    if ($user instanceof User) {
+    if (($user instanceof User) || isset($_POST['idUser'])) {
         try {
             $website = Website::insertWebsite($user->getIdUser(), $_POST['url'], $_POST['address'], $_POST['phone'], $_POST['rcs_number'], $_POST['subscription'], $_POST['evaluation_note']);
             $res->website_registered = true;

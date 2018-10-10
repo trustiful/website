@@ -68,9 +68,9 @@ require_once '../handlers/user_logged_in.php';
     <p>Réactivité /Service client</p>
     <input type="number" id="customer_service" name="customer_service">
 
-    <p>Position du certificat</p>
+    <!--<p>Position du certificat</p>
     <input type="radio" name="position" value="0"> Vertical
-    <input type="radio" name="position" value="1"> Horizontal
+    <input type="radio" name="position" value="1"> Horizontal-->
 
     <div>
         <input type="submit" id="submit" value="Enregistrer">
@@ -97,6 +97,7 @@ require_once '../handlers/user_logged_in.php';
                         firstname : $("#firstname").val(),
                         lastname : $("#lastname").val(),
                         gender : $("input[name=gender]:checked", "#register").val(),
+                        role : "client",
 
                         url :  $("#url").val(),
                         address :  $("#address").val(),
@@ -109,7 +110,7 @@ require_once '../handlers/user_logged_in.php';
                         dispute : $("#dispute").val(),
                         return_policy: $("#return_policy").val(),
                         customer_service: $("#customer_service").val(),
-                        position :  $("input[name=position]:checked", "#register").val(),
+                        position : 0 /* $("input[name=position]:checked", "#register").val()*/,
                     },
                     function(data){
 

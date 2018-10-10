@@ -11,7 +11,8 @@ $certificate = new stdClass();
 
 if (isset($_POST['password'], $_POST['email'], $_POST['firstname'], $_POST['lastname'], $_POST['gender'])) {
     try {
-        $user = User::insertUser($_POST['email'], $_POST['password'], $_POST['firstname'], $_POST['lastname'], $_POST['gender']);
+        isset($_POST['role']) ? $user = User::insertUser($_POST['email'], $_POST['password'], $_POST['firstname'], $_POST['lastname'], $_POST['gender'], $_POST['role'])
+            : $user = User::insertUser($_POST['email'], $_POST['password'], $_POST['firstname'], $_POST['lastname'], $_POST['gender']);
         $res->user_registered = true;
 
     } catch (Exception $err) {

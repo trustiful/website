@@ -166,7 +166,7 @@ SQL
     public static function getAllUsers()
     {
         $pdo = myPDO::getInstance();
-        $statement = $pdo->prepare('SELECT * FROM user WHERE role != ');
+        $statement = $pdo->prepare('SELECT * FROM user WHERE role != "admin"');
         try {
             $statement->setFetchMode(
                 PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,
@@ -174,9 +174,9 @@ SQL
                 array('id_user', 'email', 'password', 'firstname', 'lastname', 'gender', 'role', 'avatar')
             );
             $statement->execute();
-            $user = $statement->fetch();
-            if ($user !== false) {
-                return $user;
+            $users = $statement->fetchAll();
+            if ($users !== false) {
+                return $users;
             } else {
                 throw new Exception('Aucun utilisateur n\'a été trouvé');
             }

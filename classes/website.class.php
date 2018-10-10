@@ -104,7 +104,6 @@ class Website
             ');
         try{
             $statement->execute(array($this->getIdUser(), $this->getIdCertificate(), $this->getUrl(), $this->getAddress(), $this->getPhone(), $this->getRcsNumber(), $this->getSubscription(), $this->getEvaluationNote(), $this->getScreenWebsite()));
-            echo 'pouet';
         }catch (Exception $err){
             echo($err->getMessage());
         }

@@ -32,18 +32,21 @@ class User
 
     /**
      * enum H / F
+     *
      * @var string
      */
     private $gender;
 
     /**
      * can be null
+     *
      * @var string
      */
     private $role;
 
     /**
      * can be null
+     *
      * @var string
      */
     private $avatar;
@@ -55,6 +58,7 @@ class User
 
     /**
      * user.class constructor.
+     *
      * @param $id_user
      * @param $email
      * @param $password
@@ -78,6 +82,7 @@ class User
 
     /**
      * Insert the user.class into the database
+     *
      * @param $email
      * @param $password
      * @param $firstname
@@ -85,20 +90,23 @@ class User
      * @param $gender
      * @param $role
      * @param $avatar
+     *
      * @return User
      */
     public static function insertUser($email, $password, $firstname, $lastname, $gender, $role = null, $avatar = null)
     {
         $pdo = myPDO::getInstance();
-        $statement = $pdo->prepare(<<<SQL
+        $statement = $pdo->prepare(
+            <<<SQL
           INSERT INTO user (email, password, firstname, lastname, gender, role, avatar) VALUES (?,?,?,?,?,?,?)
 
 SQL
         );
-        try{
-            $statement->execute(array($email, password_hash($password,PASSWORD_DEFAULT) , $firstname, $lastname, $gender, $role, $avatar));
-            return new User($pdo->lastInsertId(),$email, password_hash($password,PASSWORD_DEFAULT), $firstname, $lastname, $gender, $role, $avatar);
-        }catch (Exception $err){
+        try {
+            $statement->execute(array($email, password_hash($password, PASSWORD_DEFAULT), $firstname, $lastname, $gender, $role, $avatar));
+
+            return new User($pdo->lastInsertId(), $email, password_hash($password, PASSWORD_DEFAULT), $firstname, $lastname, $gender, $role, $avatar);
+        } catch (Exception $err) {
             echo($err->getMessage());
         }
 
@@ -106,13 +114,16 @@ SQL
 
     /**
      * Try to connect user by using his email / password
+     *
      * @param $email
      * @param $password
+     *
      * @throws Exception
      */
-    public static function login($email, $password){
+    public static function login($email, $password)
+    {
         $user = self::getUserBy('email', $email);
-        if(password_verify($password, $user->getPassword())){
+        if (password_verify($password, $user->getPassword())) {
             session_start();
             $_SESSION['user'] = $user;
         }
@@ -122,27 +133,77 @@ SQL
     /**
      * @param $field
      * @param $value
+     *
      * @return user
      * @throws Exception
      */
-    public static function getUserBy($field, $value){
-        if(!in_array($field, self::UNIQUE_FIELDS)){
-            throw new Exception('Vous ne pouvez pas obtenir un utilisateur unique sur le critère : '.$field);
+    public static function getUserBy($field, $value)
+    {
+        if (!in_array($field, self::UNIQUE_FIELDS)) {
+            throw new Exception('Vous ne pouvez pas obtenir un utilisateur unique sur le critère : ' . $field);
 
         }
         $pdo = myPDO::getInstance();
-        $statement = $pdo->prepare('SELECT * FROM user WHERE '.$field.' = ?');
-        try{
-            $statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'User', array('id_user','email', 'password', 'firstname', 'lastname', 'gender', 'role', 'avatar'));
+        $statement = $pdo->prepare('SELECT * FROM user WHERE ' . $field . ' = ?');
+        try {
+            $statement->setFetchMode(
+                PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,
+                'User',
+                array('id_user', 'email', 'password', 'firstname', 'lastname', 'gender', 'role', 'avatar')
+            );
             $statement->execute(array($value));
             $user = $statement->fetch();
-            if($user !== false) {
+            if ($user !== false) {
                 return $user;
-            }
-            else{
+            } else {
                 throw new Exception('Aucun utilisateur n\'a été trouvé');
             }
-        }catch (Exception $err){
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
+    }
+
+    public static function getAllUsers()
+    {
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare('SELECT * FROM user WHERE role != ');
+        try {
+            $statement->setFetchMode(
+                PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,
+                'User',
+                array('id_user', 'email', 'password', 'firstname', 'lastname', 'gender', 'role', 'avatar')
+            );
+            $statement->execute();
+            $user = $statement->fetch();
+            if ($user !== false) {
+                return $user;
+            } else {
+                throw new Exception('Aucun utilisateur n\'a été trouvé');
+            }
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
+    }
+
+
+    public function getWebsites()
+    {
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare(
+            <<<SQL
+        SELECT * FROM websites WHERE id_user = ?
+SQL
+        );
+        try {
+            $statement->setFetchMode(
+                PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,
+                'Website',
+                array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website')
+            );
+            $statement->execute(array($this->getIdUser()));
+            $websites = $statement->fetchAll();
+            return $websites;
+        } catch (Exception $err) {
             echo($err->getMessage());
         }
     }

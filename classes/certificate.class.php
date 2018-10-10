@@ -138,7 +138,7 @@ SQL
             </div>
         </div>
     </div>
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="certificate" role="dialog">
         <div class="modal-dialog">
         
           <!-- Modal content-->

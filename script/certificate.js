@@ -16,11 +16,11 @@ var a = function () {
                     $('head').append('<style>body{background-color: grey;}</style>');
                     $('body').append(data.html);
                     $('.trustiful').on("click", function (e) {
-                        $("#myModal").modal();
+                        $("#certificate").modal();
 
                     });
 
-
+cer
 
                 }
             },

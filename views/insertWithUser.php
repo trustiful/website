@@ -29,7 +29,7 @@ require_once '../handlers/user_logged_in.php';
     <h1>Site</h1>
 
     <p>URL</p>
-    <input type="url" id="url" name="url" placeholder="http://www.google.com" value="http://">
+    <input type="url" id="url" name="url" placeholder="http:// ou https://">
 
     <p>Adresse</p>
     <input type="text" id="address" name="address">

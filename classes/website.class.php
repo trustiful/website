@@ -45,7 +45,7 @@ class Website
      *
      *  0 : free subscription
      *  1 : payment subscription
-    **/
+     **/
 
     private $subscription;
 
@@ -167,6 +167,27 @@ class Website
     }
 
 
+    public function getCertificate()
+    {
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare(
+            <<<SQL
+        SELECT * FROM certificate WHERE id_website = ?
+SQL
+        );
+        try {
+            $statement->setFetchMode(
+                PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,
+                'Certificate',
+                array('$d_certificate', 'id_website', 'shipping_time', 'dispute', 'return_policy', 'customer_service', 'position', 'created_at', 'updated_at')
+            );
+            $statement->execute(array($this->getIdWebsite()));
+            $certificate = $statement->fetch();
+            return ($certificate !== false) ? $certificate : null;
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
+    }
 #################################################
 #################################################
 #############  Getters and Setters  #############

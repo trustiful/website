@@ -2,7 +2,7 @@
 
 require_once '../includes/myPDO.php';
 
-class Website
+class Website implements JsonSerializable
 {
 
     /**
@@ -187,6 +187,25 @@ SQL
             echo($err->getMessage());
         }
     }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id_website' => $this->getIdWebsite(),
+            'id_user' => $this->getIdUser(),
+            'id_certificate' => $this->getIdCertificate(),
+            'url' => $this->getUrl(),
+            'address' => $this->getAddress(),
+            'phone' => $this->getPhone(),
+            'rcs_number' => $this->getRcsNumber(),
+            'subscription' => $this->getSubscription(),
+            'evaluation_note' => $this->getEvaluationNote(),
+            'screen_website' => $this->getScreenWebsite()
+        ];
+    }
 #################################################
 #################################################
 #############  Getters and Setters  #############
@@ -353,5 +372,4 @@ SQL
     {
         $this->screen_website = $screen_website;
     }
-
 }

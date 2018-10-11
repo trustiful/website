@@ -65,7 +65,6 @@ require_once '../handlers/user_logged_in.php';
     </div>
     <script>
         $(document).ready(function () {
-            console.log('pouet');
             $.get(
                 '../handlers/user.php?getUsersList=true', function (data) {
                     data.forEach( function(user){

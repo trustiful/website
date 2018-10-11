@@ -166,7 +166,7 @@ SQL
     public static function getAllUsers()
     {
         $pdo = myPDO::getInstance();
-        $statement = $pdo->prepare('SELECT * FROM user WHERE role != "admin"');
+        $statement = $pdo->prepare('SELECT * FROM user WHERE role != "admin" ORDER BY id_user');
         try {
             $statement->setFetchMode(
                 PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,

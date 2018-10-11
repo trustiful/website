@@ -38,7 +38,6 @@ if (isset($_POST['url'], $_POST['address'], $_POST['phone'], $_POST['subscriptio
         } catch (Exception $err) {
             $res->error = $err->getMessage();
             echo json_encode($res);
-
         }
     } else {
         $res->error = $err->getMessage();

@@ -11,6 +11,13 @@ require_once '../handlers/user_logged_in.php';
 <body>
 <form id="register">
 
+    <h1> Utilisateur</h1>
+
+    <p> Choisir l'utilisateur &agrave; qui ajouter un site</p>
+    <select id="users">
+
+    </select>
+
     <h1>Site</h1>
 
     <p>URL</p>
@@ -60,8 +67,13 @@ require_once '../handlers/user_logged_in.php';
         $(document).ready(function () {
             console.log('pouet');
             $.get(
-                '../handlers/user.php?getUsersList=true', function( data ) {
-                    console.log(data);
+                '../handlers/user.php?getUsersList=true', function (data) {
+                    data.forEach( function(user){
+                        $('#users').append($('<option>', {
+                            value: user.id_user,
+                            text: user.firstname+' '+user.lastname
+                        }))
+                    });
                 },
                 'json'
             );
@@ -79,6 +91,7 @@ require_once '../handlers/user_logged_in.php';
                 $.post(
                     '../handlers/register.php',
                     {
+                        id_user : $("#users").val(),
                         url: $("#url").val(),
                         address: $("#address").val(),
                         phone: $("#phone").val(),

@@ -2,7 +2,7 @@
 
 require_once '../includes/myPDO.php';
 
-class Certificate
+class Certificate implements JsonSerializable
 {
 
     /**
@@ -222,6 +222,20 @@ SQL
         return $html;
     }
 
+    public function jsonSerialize() {
+        return [
+            'id_certificate' => $this->getIdCertificate(),
+            'id_website' => $this->getIdWebsite(),
+            'shipping_time' => $this->getShippingTime(),
+            'dispute' => $this->getDispute(),
+            'return_policy' => $this->getReturnPolicy(),
+            'customer_service' => $this->getCustomerService(),
+            'position' => $this->getPosition(),
+            'created_at' => $this->getCreatedAtFormated(),
+            'updated_at' => $this->getUpdatedAtFormated()
+        ];
+    }
+
 
 #################################################
 #################################################
@@ -373,8 +387,19 @@ SQL
         $this->position = $position;
     }
 
+    /**
+     * @return string
+     */
     public function getUpdatedAtFormated(){
         $formatedDate = new DateTime($this->getUpdatedAt());
+        return $formatedDate->format('d/m/y');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAtFormated(){
+        $formatedDate = new DateTime($this->getCreatedAt());
         return $formatedDate->format('d/m/y');
     }
 }

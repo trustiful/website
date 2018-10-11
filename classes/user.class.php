@@ -2,7 +2,7 @@
 
 require_once '../includes/myPDO.php';
 
-class User
+class User implements JsonSerializable
 {
 
     /**
@@ -208,6 +208,20 @@ SQL
         }
     }
 
+
+    public function jsonSerialize()
+    {
+        return [
+            'id_user' => $this->getIdUser(),
+            'email' => $this->getEmail(),
+            'firstname' => $this->getFirstname(),
+            'lastname' => $this->getLastname(),
+            'gender' => $this->getGender(),
+            'role' => $this->getRole(),
+            'avatar' => $this->getAvatar()
+            ];
+    }
+
 #################################################
 #################################################
 #############  Getters and Setters  #############
@@ -342,4 +356,6 @@ SQL
     {
         $this->avatar = $avatar;
     }
+
+
 }

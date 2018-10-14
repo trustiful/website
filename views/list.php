@@ -22,23 +22,40 @@ $users = User::getAllUsers();
             <th>Pr&eacute;nom</th>
             <th>Nom</th>
             <th>E-mail</th>
-            <th>Mot de passe</th>
             <th>Sexe</th>
         </tr>
         <?php
         foreach ($users as $user){
             ?>
-        <tr>
-            <td><?php echo $user->getIdUser(); ?></td>
-            <td><?php echo $user->getFirstname(); ?></td>
-            <td><?php echo $user->getLastname(); ?></td>
-            <td><?php echo $user->getEmail(); ?></td>
-            <td> ********** </td>
-            <td><?php echo $user->getGender() ?></td>
+        <tr id="<?php echo $user->getIdUser(); ?>">
+            <td><div class="id_user"><?php echo $user->getIdUser(); ?></div></td>
+            <td><div class="firstname"><?php echo $user->getFirstname(); ?></div></td>
+            <td><div class="lastname"><?php echo $user->getLastname(); ?></div></td>
+            <td><div class="email"><?php echo $user->getEmail(); ?></div></td>
+            <td><div class="gender"><?php echo $user->getGender() ?></div></td>
+            <td><button value="modify">Modifier</button></td>
         </tr>
         <?php
         }
         ?>
     </table>
+    <script>
+        $("button").click(function() {
+            if($(this).val() == 'modify'){
+                var id_row = $(this).closest('tr').attr('id');
+                $("tr#" +id_row +" div.firstname").replaceWith('<input type="text" id="firstname" name="firstname" value="'+  $("tr#" +id_row +" div.firstname").text()+ '">');
+                $("tr#" +id_row +" div.lastname").replaceWith('<input type="text" id="lastname" name="lastname" value="'+  $("tr#" +id_row +" div.lastname").text()+ '">');
+                $("tr#" +id_row +" div.email").replaceWith('<input type="text" id="email" name="email" value="'+  $("tr#" +id_row +" div.email").text()+ '">');
+                $("tr#" +id_row +" div.gender").replaceWith('<select id="gender"> <option value="H" selected>H</option><option value="F">F</option></select>');
+                $(this).val('update');
+                $(this).text('Enregistrer');
+            }
+            else if ($(this).val() == 'update'){
+                alert($(this).val());
+            }
+
+        });
+
+    </script>
 </body>
 </html>

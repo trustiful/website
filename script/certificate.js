@@ -19,9 +19,6 @@ var a = function () {
                         $("#certificate").modal();
 
                     });
-
-cer
-
                 }
             },
             'json'

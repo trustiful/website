@@ -26,14 +26,15 @@ $users = User::getAllUsers();
         </tr>
         <?php
         foreach ($users as $user){
+            $id = $user->getIdUser();
             ?>
         <tr id="<?php echo $user->getIdUser(); ?>">
-            <td><div class="id_user"><?php echo $user->getIdUser(); ?></div></td>
-            <td><div class="firstname"><?php echo $user->getFirstname(); ?></div></td>
-            <td><div class="lastname"><?php echo $user->getLastname(); ?></div></td>
-            <td><div class="email"><?php echo $user->getEmail(); ?></div></td>
-            <td><div class="gender"><?php echo $user->getGender() ?></div></td>
-            <td><button value="modify">Modifier</button></td>
+            <td><div id="id_user-<?php echo $id; ?>"><?php echo $id; ?></div></td>
+            <td><div id="firstname-<?php echo $id; ?>"><?php echo $user->getFirstname(); ?></div></td>
+            <td><div id="lastname-<?php echo $id; ?>"><?php echo $user->getLastname(); ?></div></td>
+            <td><div id="email-<?php echo $id; ?>"><?php echo $user->getEmail(); ?></div></td>
+            <td><div id="gender-<?php echo $id; ?>"><?php echo $user->getGender() ?></div></td>
+            <td><button value="modify" id="mod-<?php echo $id; ?>">Modifier</button></td>
         </tr>
         <?php
         }
@@ -41,19 +42,37 @@ $users = User::getAllUsers();
     </table>
     <script>
         $("button").click(function() {
+            var id_row = $(this).closest('tr').attr('id');
+
             if($(this).val() == 'modify'){
-                var id_row = $(this).closest('tr').attr('id');
-                $("tr#" +id_row +" div.firstname").replaceWith('<input type="text" id="firstname" name="firstname" value="'+  $("tr#" +id_row +" div.firstname").text()+ '">');
-                $("tr#" +id_row +" div.lastname").replaceWith('<input type="text" id="lastname" name="lastname" value="'+  $("tr#" +id_row +" div.lastname").text()+ '">');
-                $("tr#" +id_row +" div.email").replaceWith('<input type="text" id="email" name="email" value="'+  $("tr#" +id_row +" div.email").text()+ '">');
-                $("tr#" +id_row +" div.gender").replaceWith('<select id="gender"> <option value="H" selected>H</option><option value="F">F</option></select>');
+                $("#firstname-"+ id_row).replaceWith('<input type="text" id="firstname-'+ id_row +'" name="firstname" value="'+  $("#firstname-"+ id_row).text()+ '">');
+                $("#lastname-"+ id_row).replaceWith('<input type="text" id="lastname-'+ id_row +'" ="lastname" value="'+  $("#lastname-"+ id_row).text()+ '">');
+                $("#email-" + id_row).replaceWith('<input type="text" id="email-'+ id_row +'" name="email" value="'+  $("#email-" + id_row).text()+ '">');
+                $("#gender-" + id_row).replaceWith('<select id="gender-'+ id_row +'"> <option value="H" selected>H</option><option value="F">F</option></select>');
                 $(this).val('update');
                 $(this).text('Enregistrer');
             }
             else if ($(this).val() == 'update'){
-                alert($(this).val());
+                $.post(
+                    '../handlers/user.php',
+                    {
+                        user_id : id_row,
+                        firstname : $("#firstname-" + id_row).val(),
+                        lastname: $("#lastname-" + id_row).val(),
+                        email: $("#email-" + id_row).val(),
+                        gender: $("#gender-" + id_row).find(":selected").text()
+                    },
+                    function (data) {
+                        $("#firstname-"+ id_row).replaceWith('<div id="firstname-'+ id_row +'">' + $("#firstname-"+ id_row).val()+'</div>');
+                        $("#lastname-"+ id_row).replaceWith('<div id="lastname-'+ id_row +'">' + $("#lastname-"+ id_row).val()+'</div>');
+                        $("#email-" + id_row).replaceWith('<div id="email-'+ id_row +'">' + $("#email-"+ id_row).val()+'</div>');
+                        $("#gender-" +id_row).replaceWith('<div id="gender-'+ id_row +'">' + $("#gender-"+ id_row).val()+'</div>');
+                        $("#mod-" +id_row).val('modify');
+                        $("#mod-" +id_row).text('Modifier');
+                    },
+                    'json'
+                );
             }
-
         });
 
     </script>

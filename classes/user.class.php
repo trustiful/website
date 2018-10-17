@@ -112,6 +112,24 @@ SQL
 
     }
 
+    public static function updateUser($id_user, $firstname, $lastname, $email, $gender)
+    {
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare(
+            <<<SQL
+          UPDATE  user SET firstname = ?, lastname = ?, email = ?, gender = ? WHERE id_user = ?
+
+SQL
+        );
+        try {
+            $statement->execute(array($firstname, $lastname, $email, $gender, $id_user));
+
+            return self::getUserBy('id_user', $id_user);
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
+
+    }
     /**
      * Try to connect user by using his email / password
      *

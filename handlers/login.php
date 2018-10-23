@@ -1,6 +1,8 @@
 <?php
 
+require_once './user_logged_in.php';
 require_once '../classes/user.class.php';
+
 
 $res = new stdClass();
 

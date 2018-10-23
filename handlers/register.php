@@ -3,6 +3,8 @@
 require_once '../classes/user.class.php';
 require_once '../classes/website.class.php';
 require_once '../classes/certificate.class.php';
+require_once './user_logged_in.php';
+
 
 $res = new stdClass();
 $user = new stdClass();

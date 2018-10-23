@@ -137,6 +137,19 @@ class Website implements JsonSerializable
 
     }
 
+    public static function updateWebsite($id_website, $url, $address, $phone, $rcs_number, $subscription, $evaluation_note)
+    {
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare('UPDATE website SET url = ?, address = ?, phone = ?, rcs_number = ? , subscription = ?, evaluation_note = ? WHERE id_website = ?');
+        try {
+            $statement->execute(array($url, $address, $phone, $rcs_number, $subscription, $evaluation_note, $id_website));
+            return self::getWebsiteBy('id_website', $id_website);
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
+
+    }
+
     /**
      * @param $field
      * @param $value
@@ -156,6 +169,28 @@ class Website implements JsonSerializable
             $website = $statement->fetch();
             if($website !== false) {
                 return $website;
+            }
+            else{
+                throw new Exception('Aucun site web n\'a été trouvé');
+            }
+        }catch (Exception $err){
+            echo($err->getMessage());
+        }
+    }
+
+    /**
+     * @param $id_user
+     * @return array Website
+     */
+    public static function getAllWebsitesFromUser($id_user){
+                $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare('SELECT * FROM website WHERE id_user = ?');
+        try{
+            $statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Website', array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website'));
+            $statement->execute(array($id_user));
+            $websites = $statement->fetchAll();
+            if($websites !== false) {
+                return $websites;
             }
             else{
                 throw new Exception('Aucun site web n\'a été trouvé');

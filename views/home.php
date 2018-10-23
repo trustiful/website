@@ -13,7 +13,7 @@
 
     <a href="./insert.php"> Ajouter un nouveau site</a>
     <a href="./insertWithUser.php"> Ajouter un nouveau site + utilisateur</a>
-    <a href="./list.php"> Voir la liste des sites enregistr&eacutes</a>
+    <a href="listUsers.php"> Voir la liste des sites enregistr&eacutes</a>
     <a href="" id="disconnect">D&eacuteconnexion</a>
     <script src="./js/disconnect.js"></script>
 </body>

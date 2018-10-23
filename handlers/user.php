@@ -1,6 +1,7 @@
 <?php
 
 require_once '../classes/user.class.php';
+require_once './user_logged_in.php';
 
 if (isset ($_GET['getUsersList'])) {
     $users = User::getAllUsers();

@@ -92,7 +92,20 @@ SQL
         } catch (Exception $err) {
             echo($err->getMessage());
         }
+    }
 
+    public static function updateCertificate($id_certificate, $shipping_time , $dispute, $return_policy, $customer_service, $position)
+    {
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare('UPDATE certificate SET shipping_time = ?, dispute = ?, return_policy = ?, customer_service = ?, position = ? WHERE id_certificate = ?');
+        try {
+            $statement->execute(array($shipping_time, $dispute, $return_policy, $customer_service, $position, $id_certificate));
+
+            return self::getCerficate($id_certificate);
+
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
     }
 
     /**

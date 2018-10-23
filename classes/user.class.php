@@ -117,7 +117,7 @@ SQL
         $pdo = myPDO::getInstance();
         $statement = $pdo->prepare(
             <<<SQL
-          UPDATE  user SET firstname = ?, lastname = ?, email = ?, gender = ? WHERE id_user = ?
+          UPDATE user SET firstname = ?, lastname = ?, email = ?, gender = ? WHERE id_user = ?
 
 SQL
         );
@@ -128,8 +128,8 @@ SQL
         } catch (Exception $err) {
             echo($err->getMessage());
         }
-
     }
+
     /**
      * Try to connect user by using his email / password
      *
@@ -181,6 +181,9 @@ SQL
         }
     }
 
+    /**
+     * @return array Users
+     */
     public static function getAllUsers()
     {
         $pdo = myPDO::getInstance();
@@ -237,7 +240,7 @@ SQL
             'gender' => $this->getGender(),
             'role' => $this->getRole(),
             'avatar' => $this->getAvatar()
-            ];
+        ];
     }
 
 #################################################

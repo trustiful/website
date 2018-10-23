@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 17 sep. 2018 à 01:05
+-- Généré le :  mer. 24 oct. 2018 à 00:30
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `trustiful`
 --
-CREATE DATABASE IF NOT EXISTS `trustiful` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `trustiful`;
 
 -- --------------------------------------------------------
 
@@ -30,7 +28,6 @@ USE `trustiful`;
 -- Structure de la table `certificate`
 --
 
-DROP TABLE IF EXISTS `certificate`;
 CREATE TABLE `certificate` (
   `id_certificate` int(11) NOT NULL,
   `id_website` int(11) NOT NULL,
@@ -49,7 +46,6 @@ CREATE TABLE `certificate` (
 -- Structure de la table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -67,7 +63,6 @@ CREATE TABLE `user` (
 -- Structure de la table `website`
 --
 
-DROP TABLE IF EXISTS `website`;
 CREATE TABLE `website` (
   `id_website` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -104,7 +99,6 @@ ALTER TABLE `user`
 --
 ALTER TABLE `website`
   ADD PRIMARY KEY (`id_website`),
-  ADD UNIQUE KEY `id_user` (`id_user`),
   ADD UNIQUE KEY `id_website` (`id_website`),
   ADD UNIQUE KEY `url` (`url`);
 
@@ -116,17 +110,17 @@ ALTER TABLE `website`
 -- AUTO_INCREMENT pour la table `certificate`
 --
 ALTER TABLE `certificate`
-  MODIFY `id_certificate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_certificate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT pour la table `website`
 --
 ALTER TABLE `website`
-  MODIFY `id_website` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;COMMIT;
+  MODIFY `id_website` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

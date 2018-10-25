@@ -53,6 +53,8 @@ class Certificate implements JsonSerializable
      */
     private $updated_at;
 
+    const UNIQUE_FIELDS = ['id_website', 'id_certificate'];
+
     /**
      * Certificate constructor.
      * @param $id_certificate
@@ -109,30 +111,39 @@ SQL
     }
 
     /**
-     * @param $value
+     * @param $id_certificate
      * @return website
-     * @throws Exception
      */
-    public static function getCerficate($value)
+    public static function getCerficate($id_certificate)
     {
 
         $pdo = myPDO::getInstance();
         $statement = $pdo->prepare('SELECT * FROM certificate WHERE id_certificate = ?');
         try {
             $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Certificate', array('id_certificate', 'id_website', 'shipping_time', 'dispute', 'return_policy', 'customer_service', 'position', 'created_at', 'updated_at'));
-            $statement->execute(array($value));
+            $statement->execute(array($id_certificate));
             $certificate = $statement->fetch();
-            if ($certificate !== false) {
-                return $certificate;
-            } else {
-                throw new Exception('Aucun certificat n\'a été trouvé');
-            }
+            return $certificate;
+
         } catch (Exception $err) {
             echo($err->getMessage());
         }
     }
 
 
+    public static function deleteCertificate($field, $value){
+        if(!in_array($field, self::UNIQUE_FIELDS)){
+            throw new Exception('Vous ne pouvez pas supprimer un certificat sur le critère : '.$field);
+
+        }
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare('DELETE FROM certificate WHERE '. $field .' = ?');
+        try {
+            $statement->execute(array($value));
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
+    }
     /**
      * Return the certificate and the script as the HTML modal wanted
      */

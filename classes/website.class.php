@@ -147,7 +147,20 @@ class Website implements JsonSerializable
         } catch (Exception $err) {
             echo($err->getMessage());
         }
+    }
 
+    public static function deleteWebsite($id_website){
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare(
+            <<<SQL
+          DELETE FROM website WHERE id_website = ?
+SQL
+        );
+        try {
+            $statement->execute(array($id_website));
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
     }
 
     /**
@@ -167,7 +180,7 @@ class Website implements JsonSerializable
             $statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Website', array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website'));
             $statement->execute(array($value));
             $website = $statement->fetch();
-            if($website !== false) {
+            if($website != false) {
                 return $website;
             }
             else{
@@ -189,11 +202,11 @@ class Website implements JsonSerializable
             $statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Website', array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website'));
             $statement->execute(array($id_user));
             $websites = $statement->fetchAll();
-            if($websites !== false) {
+            if($websites != false) {
                 return $websites;
             }
             else{
-                throw new Exception('Aucun site web n\'a été trouvé');
+                return [];
             }
         }catch (Exception $err){
             echo($err->getMessage());
@@ -217,7 +230,7 @@ SQL
             );
             $statement->execute(array($this->getIdWebsite()));
             $certificate = $statement->fetch();
-            return ($certificate !== false) ? $certificate : null;
+            return ($certificate != false) ? $certificate : null;
         } catch (Exception $err) {
             echo($err->getMessage());
         }

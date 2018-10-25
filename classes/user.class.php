@@ -130,6 +130,21 @@ SQL
         }
     }
 
+    public static function deleteUser($id_user){
+        $pdo = myPDO::getInstance();
+        $statement = $pdo->prepare(
+            <<<SQL
+          DELETE FROM user WHERE id_user = ?
+
+SQL
+        );
+        try {
+            $statement->execute(array($id_user));
+        } catch (Exception $err) {
+            echo($err->getMessage());
+        }
+    }
+
     /**
      * Try to connect user by using his email / password
      *

@@ -130,7 +130,6 @@ $id = $certificate->getIdCertificate();
                         {
                             delete: true,
                             id_certificate: id_row,
-
                         },function (data) {
                             if(data == 'success'){
                                 alert('Le certificat a été supprimé avec succès');

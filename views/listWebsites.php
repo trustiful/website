@@ -84,10 +84,23 @@ $user = User::getUserBy('id_user', $_GET['user']);
             <td class="text-center">
                 <button class="btn btn-info" value="modify" id="mod-<?php echo $id; ?>">Modifier</button>
             </td>
-            <td class="text-center">
-                <input class="btn btn-info" type="button" value="&Eacute;diter le certificat"
-                       onclick="window.location.href='./editCertificate.php?user=<?php echo $website->getIdUser(); ?>&id=<?php echo $website->getIdCertificate(); ?>'"/>
-            </td>
+           <?php
+            $cert = $website->getCertificate();
+            if (isset($cert)) {
+                ?>
+                <td class="text-center">
+                    <input class="btn btn-info" type="button" value="&Eacute;diter le certificat"
+                           onclick="window.location.href='./editCertificate.php?user=<?php echo $website->getIdUser(); ?>&id=<?php echo $website->getIdCertificate(); ?>'"/>
+                </td>
+                <?php
+            } else {
+                ?>
+                <td class="text-center">
+                    <input class="btn btn-info" type="button" value="Ajouter un certificat"
+                           onclick="window.location.href='./addCertificate.php?user=<?php echo $website->getIdUser(); ?>&id=<?php echo $website->getIdWebsite(); ?>'"/>                </td>
+                <?php
+            }
+            ?>
             <td class="text-center">
                 <button class="btn btn-info" value="delete">Supprimer</button>
             </td>
@@ -108,7 +121,7 @@ $user = User::getUserBy('id_user', $_GET['user']);
                 $("#address-" + id_row).replaceWith('<input type="text" id="address-' + id_row + '" name="address" value="' + $("#address-" + id_row).text() + '" style="width:100%">');
                 $("#phone-" + id_row).replaceWith('<input type="tel" id="phone-' + id_row + '" name="phone" pattern="[0-9]{10}" value="' + $("#phone-" + id_row).text() + '" style="width:100%">');
                 $("#rcs_number-" + id_row).replaceWith('<input type="text" id="rcs_number-' + id_row + '" name="rcs_number" value="' + $("#rcs_number-" + id_row).text() + '" style="width:100%">');
-                $("#subscription-" + id_row).replaceWith('<select id="subscription-' + id_row + '"> <option value="0"  '+ ($("#subscription-" + id_row).text() == 0 ? "selected" : "" ) +' >Gratuit</option><option value="1" '+ ($("#subscription-" + id_row).text() == 1 ? "selected" : "" ) +'>Payant</option></select>');
+                $("#subscription-" + id_row).replaceWith('<select id="subscription-' + id_row + '"> <option value="0"  ' + ($("#subscription-" + id_row).text() == 0 ? "selected" : "") + ' >Gratuit</option><option value="1" ' + ($("#subscription-" + id_row).text() == 1 ? "selected" : "") + '>Payant</option></select>');
                 $("#evaluation_note-" + id_row).replaceWith('<input type="number" id="evaluation_note-' + id_row + '" name="evaluation_note" min="1" max="10" value="' + $("#evaluation_note-" + id_row).text() + '" style="width:100%">');
                 $(this).val('update');
                 $(this).text('Enregistrer');
@@ -149,7 +162,7 @@ $user = User::getUserBy('id_user', $_GET['user']);
                             id_website: id_row,
                         },
                         function (data) {
-                            if(data == 'success'){
+                            if (data == 'success') {
                                 alert('Les site et certificat ont été supprimés avec succès');
                                 location.reload();
                             }

@@ -56,14 +56,14 @@ class myPDO
      *
      * @access public
      * @static
-     * @param void
-     * @return myPDO $instance
+     * @return PDO $instance
      */
     public static function getInstance()
     {
         if(is_null(self::$instance))
         {
             self::$instance = new PDO('mysql:dbname='.self::DEFAULT_SQL_DTB.';host='.self::DEFAULT_SQL_HOST,self::DEFAULT_SQL_USER ,self::DEFAULT_SQL_PASS);
+            self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return self::$instance;
     }

@@ -106,8 +106,8 @@ SQL
             $statement->execute(array($email, password_hash($password, PASSWORD_DEFAULT), $firstname, $lastname, $gender, $role, $avatar));
 
             return new User($pdo->lastInsertId(), $email, password_hash($password, PASSWORD_DEFAULT), $firstname, $lastname, $gender, $role, $avatar);
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
 
     }
@@ -125,8 +125,8 @@ SQL
             $statement->execute(array($firstname, $lastname, $email, $gender, $id_user));
 
             return self::getUserBy('id_user', $id_user);
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -140,8 +140,8 @@ SQL
         );
         try {
             $statement->execute(array($id_user));
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -191,8 +191,8 @@ SQL
             } else {
                 throw new Exception('Aucun utilisateur n\'a été trouvé');
             }
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -216,8 +216,8 @@ SQL
             } else {
                 throw new Exception('Aucun utilisateur n\'a été trouvé');
             }
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -239,8 +239,8 @@ SQL
             $statement->execute(array($this->getIdUser()));
             $websites = $statement->fetchAll();
             return $websites;
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 

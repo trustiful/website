@@ -154,6 +154,8 @@ require_once '../handlers/user_logged_in.php';
                                 if(data.website_registered && data.certificate_registered){
                                     alert('Le site et certificat ont bien été enregistrés');
                                     window.location = './home.php';
+                                } else {
+                                    alert('Un problème est survenu lors de l\'insertion des données');
                                 }
                             },
                             'json'

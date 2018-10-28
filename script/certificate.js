@@ -1,6 +1,6 @@
 var a = function () {
     var url = window.location.protocol + '//' + window.location.hostname;
-
+    console.log(url);
     $(document).ready(function () {
         $.post(
             '../ajax/certificate.php',
@@ -15,10 +15,15 @@ var a = function () {
                     $('head').append('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>');
                     $('head').append('<style>body{background-color: grey;}</style>');
                     $('body').append(data.html);
-                    $('.trustiful').on("click", function (e) {
+                    $('#trustiful').on("click", function (e) {
                         $("#certificate").modal();
-
+                        $('.first-body').css( "display", "none" );
                     });
+                    $('#certificate').on('hidden.bs.modal', function () {
+                        $('.first-body').css( "display", "block" );
+                    })
+
+
                 }
             },
             'json'

@@ -3,8 +3,7 @@ require_once '../handlers/user_logged_in.php';
 
 require_once '../classes/user.class.php';
 $users = User::getAllUsers();
-
-if (count($users == 0)) {
+if (count($users) == 0) {
     ?>
     <script>
     alert("Aucun client n'a été enregistré.");

@@ -179,6 +179,8 @@ require_once '../handlers/user_logged_in.php';
                         if (data.user_registered && data.website_registered && data.certificate_registered) {
                             alert('Les données ont bien été enregistrées');
                             window.location = './home.php';
+                        } else {
+                            alert('Un problème est survenu lors de l\'insertion des données);
                         }
                     },
                     'json'

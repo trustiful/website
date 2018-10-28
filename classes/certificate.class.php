@@ -91,8 +91,8 @@ SQL
             $statement->execute(array($id_website, $shipping_time, $dispute, $return_policy, $customer_service, $position));
             return new Certificate($pdo->lastInsertId(), $id_website, $shipping_time, $dispute, $return_policy, $customer_service, $position, new DateTime(), new DateTime());
 
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -105,8 +105,8 @@ SQL
 
             return self::getCerficate($id_certificate);
 
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -125,8 +125,8 @@ SQL
             $certificate = $statement->fetch();
             return $certificate;
 
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -140,18 +140,18 @@ SQL
         $statement = $pdo->prepare('DELETE FROM certificate WHERE '. $field .' = ?');
         try {
             $statement->execute(array($value));
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
     /**
      * Return the certificate and the script as the HTML modal wanted
      */
-    public function toHTML()
+    public function toHTML($subscription)
     {
         $html = '';
+        $html .= ($subscription == 1) ? '<div class="trustiful" id="trustiful">' : '<div class="trustiful_free" id="trustiful">';
         $html .= '
-    <div class="trustiful" id="trustiful">
         <div class="first-body">
             <img src="../src/img/logo.png" class="img-fluid"/><br>
             <p class="trusted tf-p" >Achat confiance</p>

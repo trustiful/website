@@ -9,7 +9,7 @@ $res = new stdClass();
 if(isset($_POST['url'])){
     $website = Website::getWebsiteBy('url', $_POST['url']);
     $certificate = Certificate::getCerficate($website->getIdCertificate());
-    $res->html = $certificate->toHTML();
+    $res->html = $certificate->toHTML($website->getSubscription());
     $res->success = true;
 }
 else{

@@ -95,16 +95,17 @@ class Website implements JsonSerializable
     /**
      *  Update the row of the current instance with its current attributes
      */
-    public function update(){
+    public function update()
+    {
         $pdo = myPDO::getInstance();
         $statement = $pdo->prepare('
           UPDATE website 
           SET id_user = ?, id_certificate = ?, url = ?, address = ?, phone = ? , rcs_number = ?, subscription = ?, evaluation_note = ?, screen_website = ?
-          WHERE id_website = '. $this->getIdWebsite() .'
+          WHERE id_website = ' . $this->getIdWebsite() . '
             ');
-        try{
+        try {
             $statement->execute(array($this->getIdUser(), $this->getIdCertificate(), $this->getUrl(), $this->getAddress(), $this->getPhone(), $this->getRcsNumber(), $this->getSubscription(), $this->getEvaluationNote(), $this->getScreenWebsite()));
-        }catch (Exception $err){
+        } catch (Exception $err) {
             echo($err->getMessage());
         }
 
@@ -126,13 +127,13 @@ class Website implements JsonSerializable
     {
         $pdo = myPDO::getInstance();
         $statement = $pdo->prepare('INSERT INTO website (id_user, url, address, phone, rcs_number, subscription, evaluation_note, screen_website) VALUES (?,?,?,?,?,?,?,?)');
-        try{
+        try {
             $statement->execute(array($id_user, $url, $address, $phone, $rcs_number, $subscription, $evaluation_note, $screen_website));
 
-            return new Website($pdo->lastInsertId(),$id_user, null, $url, $address, $phone, $rcs_number, $subscription, $evaluation_note, $screen_website);
+            return new Website($pdo->lastInsertId(), $id_user, null, $url, $address, $phone, $rcs_number, $subscription, $evaluation_note, $screen_website);
 
-        }catch (Exception $err){
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
 
     }
@@ -149,7 +150,8 @@ class Website implements JsonSerializable
         }
     }
 
-    public static function deleteWebsite($id_website){
+    public static function deleteWebsite($id_website)
+    {
         $pdo = myPDO::getInstance();
         $statement = $pdo->prepare(
             <<<SQL
@@ -158,8 +160,8 @@ SQL
         );
         try {
             $statement->execute(array($id_website));
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -169,25 +171,25 @@ SQL
      * @return website
      * @throws Exception
      */
-    public static function getWebsiteBy($field, $value){
-        if(!in_array($field, self::UNIQUE_FIELDS)){
-            throw new Exception('Vous ne pouvez pas obtenir un site web unique sur le critère : '.$field);
+    public static function getWebsiteBy($field, $value)
+    {
+        if (!in_array($field, self::UNIQUE_FIELDS)) {
+            throw new Exception('Vous ne pouvez pas obtenir un site web unique sur le critère : ' . $field);
 
         }
         $pdo = myPDO::getInstance();
-        $statement = $pdo->prepare('SELECT * FROM website WHERE '. $field .' = ?');
-        try{
-            $statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Website', array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website'));
+        $statement = $pdo->prepare('SELECT * FROM website WHERE ' . $field . ' = ?');
+        try {
+            $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Website', array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website'));
             $statement->execute(array($value));
             $website = $statement->fetch();
-            if($website != false) {
+            if ($website != false) {
                 return $website;
-            }
-            else{
+            } else {
                 throw new Exception('Aucun site web n\'a été trouvé');
             }
-        }catch (Exception $err){
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -195,21 +197,21 @@ SQL
      * @param $id_user
      * @return array Website
      */
-    public static function getAllWebsitesFromUser($id_user){
-                $pdo = myPDO::getInstance();
+    public static function getAllWebsitesFromUser($id_user)
+    {
+        $pdo = myPDO::getInstance();
         $statement = $pdo->prepare('SELECT * FROM website WHERE id_user = ?');
-        try{
-            $statement->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Website', array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website'));
+        try {
+            $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Website', array('id_website', 'id_user', 'id_certificate', 'url', 'address', 'phone', 'rcs_number', 'subscription', 'evaluation_note', 'screen_website'));
             $statement->execute(array($id_user));
             $websites = $statement->fetchAll();
-            if($websites != false) {
+            if ($websites != false) {
                 return $websites;
-            }
-            else{
+            } else {
                 return [];
             }
-        }catch (Exception $err){
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 
@@ -231,8 +233,8 @@ SQL
             $statement->execute(array($this->getIdWebsite()));
             $certificate = $statement->fetch();
             return ($certificate != false) ? $certificate : null;
-        } catch (Exception $err) {
-            echo($err->getMessage());
+        } catch (PDOException $err) {
+            throw new PDOException($err->getMessage());
         }
     }
 

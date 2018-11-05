@@ -13,7 +13,6 @@ var a = function () {
                     $('head').append('<link rel="stylesheet" href="../views/css/trustiful.css" type="text/css" />');
                     $('head').append('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">');
                     $('head').append('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>');
-                    $('head').append('<style>body{background-color: grey;}</style>');
                     $('body').append(data.html);
                     $('#trustiful').on("click", function (e) {
                         $("#certificate").modal();
